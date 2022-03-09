@@ -1,53 +1,29 @@
 ﻿using System;
 
-namespace Algorithm_Problems
+namespace BubbleSort
 {
     class Program
     {
-		static void Main(string[] args)
-		{
-			Console.WriteLine("Enter max size: ");
-			int n = int.Parse(Console.ReadLine());
-
-
-			/* Creating Stack */
-			StackLogic stackLogic = new StackLogic(n);
-			Console.WriteLine();
-			Console.WriteLine("Parenthesis Matching");
-			Console.WriteLine();
-
-
-			/* Accepting expression */
-			Console.WriteLine("Enter expression: ");
-			string exp = "(5+6)∗(7+8)/(4+3)(5+6)";
-
-			Console.WriteLine("Matches and Mismatches: ");
-
-			for (int i = 0; i < exp.Length - 1; i++)
-			{
-				char ch = exp[i];
-
-				if (ch == '(')
-				{
-					stackLogic.push(i);
-				}
-				else if (ch == ')')
-				{
-					try
-					{
-						long p = (stackLogic.pop() + 1);
-						Console.WriteLine("')' at index " + (i + 1) + " matched with '(' at index " + p);
-					}
-					catch (Exception e)
-					{
-						Console.WriteLine("')' at index " + (i + 1) + " is unmatched");
-					}
-				}
-				while (!stackLogic.isEmpty())
-				{
-					Console.WriteLine("'(' at index " + (stackLogic.pop() + 1) + " is unmatched");
-				}
-			}
-		}
-	}
+        static void Main(string[] args)
+        {
+            int[] arr = { 78, 55, 45, 98, 13 };
+            int temp;
+            for (int j = 0; j <= arr.Length - 2; j++)
+            {
+                for (int i = 0; i <= arr.Length - 2; i++)
+                {
+                    if (arr[i] > arr[i + 1])
+                    {
+                        temp = arr[i + 1];
+                        arr[i + 1] = arr[i];
+                        arr[i] = temp;
+                    }
+                }
+            }
+            Console.WriteLine("Sorted:");
+            foreach (int p in arr)
+                Console.Write(p + " ");
+            Console.Read();
+        }
+    }
 }

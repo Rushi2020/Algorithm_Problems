@@ -1,47 +1,81 @@
 ﻿using System;
 
-namespace PrimePalindrome
+namespace BinarySearchTree
 {
     class Program
     {
-        static void Main(string[] args)
+        public class Node
         {
-            int primePalindrome = 0;
-            for (int i = 999; i > 2; i--)
-            {
-                if (IsPrime(i) && IsPalindrome(i))
-                {
-                    primePalindrome = i;
-                    break;
-                }
-            }
-            Console.WriteLine(primePalindrome);
-        }
-        public static bool IsPrime(int number)
-        {
-            for (int i = 2; i < (number / 2 + 1); i++)
-            {
-                if ((number % i) == 0)
-                {
-                    return false;
-                }
-            }
+            public int key;
+            public Node left, right;
 
-            return true;
-        }
-        public static bool IsPalindrome(int number)
-        {
-            int length = number.ToString().Length;
-            string digits = number.ToString();
-
-            for (int i = 0; i < length; i++)
+            public Node(int item)
             {
-                if (digits[i] != digits[length - i - 1])
-                {
-                    return false;
-                }
+                key = item;
+                left = right = null;
             }
-            return true;
+        }
+        // Root of BST
+        Node root;
+
+        // Constructor
+        Program()
+        {
+            root = null;
+        }
+        // This method mainly calls insertRec()
+        void insert(int key)
+        {
+            root = insertRec(root, key);
+        }
+        // a new key in BST
+        Node insertRec(Node root, int key)
+        {
+
+            // If the tree is empty,
+            // return a new node
+            if (root == null)
+            {
+                root = new Node(key);
+                return root;
+            }
+            // Otherwise, recur down the tree
+            if (key < root.key)
+                root.left = insertRec(root.left, key);
+            else if (key > root.key)
+                root.right = insertRec(root.right, key);
+
+            // Return the (unchanged) node pointer
+            return root;
+        }
+        // This method mainly calls InorderRec()
+        void inorder()
+        {
+            inorderRec(root);
+        }
+        // do inorder traversal of BST
+        void inorderRec(Node root)
+        {
+            if (root != null)
+            {
+                inorderRec(root.left);
+                Console.WriteLine(root.key);
+                inorderRec(root.right);
+            }
+        }
+        public static void Main(String[] args)
+        {
+            Program tree = new Program();
+            tree.insert(50);
+            tree.insert(30);
+            tree.insert(20);
+            tree.insert(40);
+            tree.insert(70);
+            tree.insert(60);
+            tree.insert(80);
+
+            // Print inorder traversal of the BST
+            tree.inorder();
         }
     }
 }
